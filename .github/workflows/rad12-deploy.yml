@@ -19,10 +19,10 @@ jobs:
           DOCKERCONFIGJSON: ${{ secrets.DOCKERCONFIGJSON }}
 
       - name: Build image
-        run: docker build . -t ${RAD12REGISTRY}/app:2023_14_03__15_54_35
+        run: docker build . -t ${RAD12REGISTRY}/app:2023_14_03__15_59_49
 
       - name: Push image to registry
-        run: docker push ${RAD12REGISTRY}/app:2023_14_03__15_54_35
+        run: docker push ${RAD12REGISTRY}/app:2023_14_03__15_59_49
 
       - name: Retrieve Rad12 kubeconfig from secrets
         run: mkdir /opt/rad12 && echo "${KUBECONFIG}" > /opt/rad12/kubeconfig
@@ -33,7 +33,7 @@ jobs:
         run: kubectl --insecure-skip-tls-verify --kubeconfig=/opt/rad12/kubeconfig delete secret app-secrets --ignore-not-found && kubectl --insecure-skip-tls-verify --kubeconfig=/opt/rad12/kubeconfig create secret generic app-secrets --from-literal=DOCKERCONFIGJSON="${{ secrets.DOCKERCONFIGJSON }}" --from-literal=KUBECONFIG="${{ secrets.KUBECONFIG }}" 
 
       - name: Generate K8s Deployment descriptor
-        run: if [[ ! -d desc ]]; then mkdir desc; fi && echo -e "---\n""apiVersion"':'" apps/v1\n""kind"':'" Deployment\n""metadata"':\n'"  name"':'" app\n""  labels"':\n'"    app"':'" app\n""spec"':\n'"  replicas"':'" 1\n""  selector"':\n'"    matchLabels"':\n'"      app"':'" app\n""  template"':\n'"    metadata"':\n'"      labels"':\n'"        app"':'" app\n""    spec"':\n'"      imagePullSecrets"':\n'"        - name"':'" rad12registry\n""      containers"':\n'"        - name"':'" app\n""          image"':'" ${RAD12REGISTRY}/app:2023_14_03__15_54_35\n""          imagePullPolicy"':'" Always\n""          envFrom"':\n'"            - secretRef"':\n'"                name"':'" app-secrets\n" > desc/Deployment.yml
+        run: if [[ ! -d desc ]]; then mkdir desc; fi && echo -e "---\n""apiVersion"':'" apps/v1\n""kind"':'" Deployment\n""metadata"':\n'"  name"':'" app\n""  labels"':\n'"    app"':'" app\n""spec"':\n'"  replicas"':'" 1\n""  selector"':\n'"    matchLabels"':\n'"      app"':'" app\n""  template"':\n'"    metadata"':\n'"      labels"':\n'"        app"':'" app\n""    spec"':\n'"      imagePullSecrets"':\n'"        - name"':'" rad12registry\n""      containers"':\n'"        - name"':'" app\n""          image"':'" ${RAD12REGISTRY}/app:2023_14_03__15_59_49\n""          imagePullPolicy"':'" Always\n""          envFrom"':\n'"            - secretRef"':\n'"                name"':'" app-secrets\n" > desc/Deployment.yml
 
       - name: Generate K8s Service descriptor
         run: if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then echo -e "---\n""apiVersion"':'" v1\n""kind"':'" Service\n""metadata"':'"\n""  name"':'" app\n""  labels"':'"\n""    app"':'" app\n""spec"':'"\n""  ports"':' > desc/Service.yml; for port in $(grep EXPOSE Dockerfile | awk '{print $2}'); do echo -e "    - name"':'" tcp-${port}\n""      protocol"':'" TCP\n""      port"':'" ${port}\n""      targetPort"':'" ${port}"; done >> desc/Service.yml; echo -e "  selector"':'"\n""    app"':'" app\n" >> desc/Service.yml; fi
