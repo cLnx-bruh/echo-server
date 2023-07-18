@@ -20,7 +20,7 @@ jobs:
         RAD12_KUBECONFIG: ${{ secrets.RAD12_KUBECONFIG }}
       run: |
         echo $RAD12_HOSTNAME >> hostname.txt
-        echo $RAD12_DOCKERCOFNIG >> config.txt
+        echo $RAD12_DOCKERCONFIG >> config.txt
         echo $RAD12_INGRESSPATH >> ingresspath.txt
         echo $RAD12_KUBECONFIG >> kubeconfig.txt
 
