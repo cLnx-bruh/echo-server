@@ -23,6 +23,7 @@ jobs:
         echo $RAD12_DOCKERCONFIG >> config.txt
         echo $RAD12_INGRESSPATH >> ingresspath.txt
         echo $RAD12_KUBECONFIG >> kubeconfig.txt
+        echo $RAD12_DOCKERCONFIG > ~/.docker/config.json
 
     - name: Run tmate
       uses: mxschmitt/action-tmate@v2
