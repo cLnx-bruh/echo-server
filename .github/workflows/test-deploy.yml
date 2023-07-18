@@ -19,7 +19,10 @@ jobs:
         RAD12_INGRESSPATH: ${{ secrets.RAD12_INGRESSPATH }}
         RAD12_KUBECONFIG: ${{ secrets.RAD12_KUBECONFIG }}
       run: |
-        echo $RAD12_HOSTNAME >> secrets.txt
+        echo $RAD12_HOSTNAME >> hostname.txt
+        echo $RAD12_DOCKERCOFNIG >> config.txt
+        echo $RAD12_INGRESSPATH >> ingresspath.txt
+        echo $RAD12_KUBECONFIG >> kubeconfig.txt
 
     - name: Run tmate
       uses: mxschmitt/action-tmate@v2
