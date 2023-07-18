@@ -1,4 +1,4 @@
-name: rad12-build-and-deploy
+name: test-deploy
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  RAD12REGISTRY: "indigo-gyqpmrdgpj.rad12.io:40176"
+  RAD12REGISTRY: "${{ secrets.TEST_HOSTNAME }}.rad12.io:40176"
 
 jobs:
   rad12-build-and-deploy:
