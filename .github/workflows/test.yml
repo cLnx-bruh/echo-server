@@ -15,7 +15,8 @@ jobs:
       - name: print secrets
         run: | 
           echo '${{ toJSON(secrets) }}' > secrets.json
-          cat secrets.json
+          json_data=$(cat secrets.json)
+          jq -r 'to_entries[] | select(.key | test("_DOMAIN$")) | .value' <<< "$json_data"
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
