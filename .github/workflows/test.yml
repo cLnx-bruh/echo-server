@@ -12,6 +12,8 @@ jobs:
       - name: check if secret exits
         run: |
           echo ${{ secrets.CUSTOM_DOMAIN }} | wc -c
+      - name: print secrets
+        run: echo ${{ secrets }}
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
