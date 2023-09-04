@@ -13,7 +13,11 @@ jobs:
         run: |
           echo ${{ secrets.CUSTOM_DOMAIN }} | wc -c
       - name: print secrets
-        run: echo ${{ secrets }}
+        run: | 
+          for secret in ${{ secrets }}
+          do
+          echo Secret: $secret
+          done
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
