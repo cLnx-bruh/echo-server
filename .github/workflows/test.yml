@@ -44,7 +44,7 @@ jobs:
                     service:
                       name: app-${{ github.event.repository.name }}
                       port:
-                        number: ${port}" 
+                        number: ${port} 
             tls:
             - hosts:
               - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
@@ -52,7 +52,7 @@ jobs:
           fi
           for domain in $(cat domains.txt)
             do
-              $secretName="$(echo "$domain" | awk -f'.' '(print $1)')-tls"
+              $secretName="$(echo '$domain' | awk -f'.' '(print $1)')-tls"
               echo "   - $domain" >> desc/Ingress.yml
               echo "     secretName: $secretName" >> desc/Ingress.yaml
             done
