@@ -23,34 +23,39 @@ jobs:
             mkdir $d
           done
           ls -lah
-      - name: setup tmate
-        uses: mxschmitt/action-tmate@v3
-      #- name: Generate K8s Ingress descriptor
-      #  run: |
-      #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
-      #      port=$(grep EXPOSE Dockerfile | head -1 | awk '{print $2}')
-      #      echo "---
-      #    apiVersion: networking.k8s.io/v1
-      #    kind: Ingress
-      #    metadata:
-      #      name: app-${{ github.event.repository.name }}
-      #      annotations:
-      #        ingress.kubernetes.io/ssl-redirect: 'true'
-      #    spec:
-      #      tls:
-      #      - hosts:
-      #        - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
-      #        secretName: rad12-tls
-      #      rules:
-      #      - http:
-      #          paths:
-      #          - path: ${{ secrets.RAD12_INGRESSPATH}}
-      #            pathType: Prefix
-      #            backend:
-      #              service:
-      #                name: app-${{ github.event.repository.name }}
-      #                port:
-      #                  number: ${port}" > desc/Ingress.yml
-      #    fi
-      #    cat desc/Ingress.yml
-#
+      - name: Generate K8s Ingress descriptor
+        run: |
+          if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
+            port=$(grep EXPOSE Dockerfile | head -1 | awk '{print $2}')
+            echo "---
+          apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          metadata:
+            name: app-${{ github.event.repository.name }}
+            annotations:
+              ingress.kubernetes.io/ssl-redirect: 'true'
+          spec:
+            rules:
+            - http:
+                paths:
+                - path: ${{ secrets.RAD12_INGRESSPATH}}
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: app-${{ github.event.repository.name }}
+                      port:
+                        number: ${port}" 
+            tls:
+            - hosts:
+              - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
+              secretName: rad12-tls > desc/Ingress.yml
+            for domain in $(cat domains.txt)
+            do
+              $secretName="$(echo "$domain" | awk -f'.' '(print $1)')-tls"
+              echo "   - $domain
+                secretName: $secretName >> desc/Ingress.yml
+              "
+            done
+          fi
+          cat desc/Ingress.yml
+      
