@@ -54,7 +54,7 @@ jobs:
             do
               $secretName="$(echo '$domain' | awk -f'.' '(print $1)')-tls"
               echo "   - $domain" >> desc/Ingress.yml
-              echo "     secretName: $secretName" >> desc/Ingress.yaml
+              echo "     secretName: $secretName" >> desc/Ingress.yml
             done
           cat desc/Ingress.yml
       
