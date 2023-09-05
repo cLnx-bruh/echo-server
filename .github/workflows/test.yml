@@ -60,4 +60,6 @@ jobs:
           done < domains.txt
 
           cat desc/Ingress.yml
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       
