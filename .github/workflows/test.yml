@@ -49,12 +49,12 @@ jobs:
             - hosts:
               - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
               secretName: rad12-tls" > desc/Ingress.yml
-            for domain in $(cat domains.txt)
+          fi
+          for domain in $(cat domains.txt)
             do
               $secretName="$(echo "$domain" | awk -f'.' '(print $1)')-tls"
               echo "   - $domain
                 secretName: $secretName" >> desc/Ingress.yml
             done
-          fi
           cat desc/Ingress.yml
       
