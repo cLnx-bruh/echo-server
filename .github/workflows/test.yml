@@ -20,7 +20,9 @@ jobs:
           for d in $(cat domains.txt)
           do
             echo $d
+            mkdir $d
           done
+          ls -lah
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
