@@ -25,6 +25,7 @@ jobs:
           ls -lah
       - name: Generate K8s Ingress descriptor
         run: |
+          mkdir desc
           if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
             port=$(grep EXPOSE Dockerfile | head -1 | awk '{print $2}')
             echo "---
