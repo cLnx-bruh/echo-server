@@ -10,8 +10,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: echo into file
+        env:
+          domains: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
-          echo ${{ secrets.CUSTOM_DOMAINS }} >> domains.txt
+          echo "$DOMAINS"
+          echo "$DOMAINS" >> domains.txt
       - name: print secrets
         run: | 
           for d in $(cat domains.txt)
