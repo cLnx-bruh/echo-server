@@ -54,7 +54,8 @@ jobs:
           secretName=""
 
           while read -r domain; do
-            secretName="${domain%%.*}-tls"  
+            secretName="${domain%%.*}-tls"
+            echo "  - hosts:" >> desc/Ingress.yml   
             echo "    - $domain" >> desc/Ingress.yml
             echo "    secretName: $secretName" >> desc/Ingress.yml
           done < domains.txt
