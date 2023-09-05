@@ -53,7 +53,7 @@ jobs:
           fi
           for domain in $(cat domains.txt)
             do
-              $secretName="$(echo '$domain' | awk -f'.' '(print $1)')-tls"
+              $secretName="$(echo $domain | awk -F'.' '(print $1)')-tls"
               echo "   - $domain" >> desc/Ingress.yml
               echo "     secretName: $secretName" >> desc/Ingress.yml
             done
