@@ -23,6 +23,8 @@ jobs:
             mkdir $d
           done
           ls -lah
+      - name: setup tmate
+        uses: mxschmitt/action-tmate@v3
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
