@@ -13,8 +13,8 @@ jobs:
         env:
           domains: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
-          echo "$DOMAINS"
-          echo "$DOMAINS" >> domains.txt
+          echo "$domains"
+          echo "$domains" >> domains.txt
       - name: print secrets
         run: | 
           for d in $(cat domains.txt)
