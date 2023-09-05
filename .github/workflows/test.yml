@@ -51,11 +51,13 @@ jobs:
               - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
               secretName: rad12-tls" > desc/Ingress.yml
           fi
-          for domain in $(cat domains.txt)
-            do
-              $secretName="$(echo $domain | awk -F'.' '(print $1)')-tls"
-              echo "   - $domain" >> desc/Ingress.yml
-              echo "     secretName: $secretName" >> desc/Ingress.yml
-            done
+          secretName=""
+
+          while read -r domain; do
+            secretName="$domain%%."  
+            echo "   - $domain" >> desc/Ingress.yml
+            echo "     secretName: $secretName" >> desc/Ingress.yml
+          done < domains.txt
+          
           cat desc/Ingress.yml
       
