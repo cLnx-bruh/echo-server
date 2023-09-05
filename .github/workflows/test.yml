@@ -9,14 +9,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: check if secret exits
+      - name: echo into file
         run: |
-          echo ${{ secrets.CUSTOM_DOMAIN }} | wc -c
+          echo ${{ secrets.CUSTOM_DOMAINS }} >> domains.txt
       - name: print secrets
         run: | 
-          echo '${{ toJSON(secrets) }}' > secrets.json
-          json_data=$(cat secrets.json)
-          jq -r 'to_entries[] | select(.key | test("_DOMAIN$")) | .value' <<< "$json_data"
+          for d in $(cat domains.txt)
+          do
+            echo $d
+          done
       #- name: Generate K8s Ingress descriptor
       #  run: |
       #    if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
