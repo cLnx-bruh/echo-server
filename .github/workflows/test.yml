@@ -16,6 +16,8 @@ jobs:
           echo "$DOMAINS"
           echo "$DOMAINS" >> domains.txt
       - name: test command
+        env:
+          DOMAINS: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
           echo $DOMAINS | wc -c 
       - name: print secrets
