@@ -19,7 +19,11 @@ jobs:
         env:
           DOMAINS: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
-          echo $DOMAINS | wc -c 
+          if [ "echo $DOMAINS | wc -c" -gt 1]; then
+            echo "it exits"
+          else
+            echo "it doesnt exist"
+          fi 
       - name: print secrets
         run: | 
           for d in $(cat domains.txt)
