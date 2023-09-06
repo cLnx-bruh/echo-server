@@ -157,7 +157,7 @@ jobs:
                 - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
                 secretName: rad12-tls" > desc/Ingress.yml
           fi
-          if [ 'echo $DOMAINS | wc-c' -gt 2]
+          if [ 'echo $DOMAINS | wc-c' -gt 2]; then
             secretName=""
             echo "$DOMAINS" >> domains.txt
 
