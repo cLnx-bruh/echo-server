@@ -19,7 +19,7 @@ jobs:
         env:
           DOMAINS: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
-          if [ "echo $DOMAINS | wc -c" -gt 1]; then
+          if [ "echo $DOMAINS | wc -c" -gt 1 ]; then
             echo "it exits"
           else
             echo "it doesnt exist"
