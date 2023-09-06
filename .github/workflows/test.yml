@@ -62,7 +62,7 @@ jobs:
               - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
               secretName: rad12-tls" > desc/Ingress.yml
           fi
-          if [ $DOMAINS != '' ]; then 
+          if [ "$DOMAINS" != '' ]; then 
             secretName=""
             echo "$DOMAINS" >> domains.txt
 
