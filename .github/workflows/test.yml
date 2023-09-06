@@ -33,6 +33,8 @@ jobs:
           done
           ls -lah
       - name: Generate K8s Ingress descriptor
+        env:
+          DOMAINS: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
           mkdir desc
           if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
