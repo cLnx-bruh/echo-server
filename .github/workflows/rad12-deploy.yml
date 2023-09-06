@@ -129,6 +129,8 @@ jobs:
           fi
 
       - name: Generate K8s Ingress descriptor
+        env:
+          DOMAINS: ${{ secrets.CUSTOM_DOMAINS }}
         run: |
           if [[ "$(grep 'EXPOSE ' Dockerfile)" != "" ]]; then
             port=$(grep EXPOSE Dockerfile | head -1 | awk '{print $2}')
@@ -140,10 +142,6 @@ jobs:
             annotations:
               ingress.kubernetes.io/ssl-redirect: 'true'
           spec:
-            tls:
-            - hosts:
-              - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
-              secretName: rad12-tls
             rules:
             - http:
                 paths:
@@ -153,7 +151,22 @@ jobs:
                     service:
                       name: app-${{ github.event.repository.name }}
                       port:
-                        number: ${port}" > desc/Ingress.yml
+                        number: ${port}
+             tls:
+              - hosts:
+                - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
+                secretName: rad12-tls" > desc/Ingress.yml
+          fi
+          if [ 'echo $DOMAINS | wc-c' -lt 2]
+            secretName=""
+            echo "$DOMAINS" >> domains.txt
+
+            while read -r domain; do
+              secretName="${domain%%.*}-tls"
+              echo "  - hosts:" >> desc/Ingress.yml   
+              echo "    - $domain" >> desc/Ingress.yml
+              echo "    secretName: $secretName" >> desc/Ingress.yml
+            done < domains.txt
           fi
           cat desc/Ingress.yml
 
