@@ -158,6 +158,7 @@ jobs:
               secretName: rad12-tls" > desc/Ingress.yml
           fi
           if [ "$DOMAINS" != '' ]; then
+            echo "$DOMAINS" >> domains.txt
             secretName=""
 
             while read -r domain; do
