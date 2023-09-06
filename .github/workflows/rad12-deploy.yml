@@ -152,14 +152,13 @@ jobs:
                       name: app-${{ github.event.repository.name }}
                       port:
                         number: ${port}
-             tls:
-              - hosts:
-                - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
-                secretName: rad12-tls" > desc/Ingress.yml
+            tls:
+            - hosts:
+              - ${{ secrets.RAD12_HOSTNAME}}.rad12.io
+              secretName: rad12-tls" > desc/Ingress.yml
           fi
-          if [ 'echo $DOMAINS | wc -c' -gt 2]; then
+          if [ "$DOMAINS" != '' ]; then
             secretName=""
-            echo "$DOMAINS" >> domains.txt
 
             while read -r domain; do
               secretName="${domain%%.*}-tls"
