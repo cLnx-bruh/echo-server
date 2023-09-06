@@ -15,6 +15,9 @@ jobs:
         run: |
           echo "$DOMAINS"
           echo "$DOMAINS" >> domains.txt
+      - name: test command
+        run: |
+          echo $DOMAINS | wc -c 
       - name: print secrets
         run: | 
           for d in $(cat domains.txt)
