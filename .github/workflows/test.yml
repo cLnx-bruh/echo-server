@@ -53,16 +53,17 @@ jobs:
               - ${{ secrets.RAD12_HOSTNAME }}.rad12.io
               secretName: rad12-tls" > desc/Ingress.yml
           fi
-          secretName=""
+          if [ `echo $DOMAINS | wc -c` -gt 2]; then 
+            secretName=""
+            echo "$DOMAINS" >> domains.txt
 
-          while read -r domain; do
-            secretName="${domain%%.*}-tls"
-            echo "  - hosts:" >> desc/Ingress.yml   
-            echo "    - $domain" >> desc/Ingress.yml
-            echo "    secretName: $secretName" >> desc/Ingress.yml
-          done < domains.txt
+            while read -r domain; do
+              secretName="${domain%%.*}-tls"
+              echo "  - hosts:" >> desc/Ingress.yml   
+              echo "    - $domain" >> desc/Ingress.yml
+              echo "    secretName: $secretName" >> desc/Ingress.yml
+            done < domains.txt
+          fi
 
           cat desc/Ingress.yml
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      
+
