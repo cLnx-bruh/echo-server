@@ -12,12 +12,12 @@ jobs:
       docker:
         image: docker:dind
         ports:
-          - 2375:8080
+          - 8080:2375
         options: --privileged=true --name=docker-dind
 
     steps:
     - name: sleep
-      run: sleep 60
+      run: sleep 20
     - name: test docker
       run: docker run curlimages/curl
       env:
