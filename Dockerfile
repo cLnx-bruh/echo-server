@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR app
 RUN apk --update add docker
 RUN docker run hello-world
+ARG DOCKER_HOST=tcp://localhost:2375
 COPY echo.py echo.py
 
 EXPOSE 3246
