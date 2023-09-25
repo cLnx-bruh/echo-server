@@ -43,7 +43,7 @@ jobs:
       - name: Build image
         run: |
           echo $DOCKER_HOST
-          docker build . --build-arg="USERNAME=${{ github.actor }}" --build-arg="TOKEN=${{ secrets.USER_PAT }}" -e DOCKER_HOST=$DOCKER_HOST -t ${RAD12REGISTRY}/app-${{ github.event.repository.name }}:${{ github.event.inputs.build_tag }}
+          docker build . --add-host host.docker.internal:host-gateway . --build-arg="USERNAME=${{ github.actor }}" --build-arg="TOKEN=${{ secrets.USER_PAT }}" -t ${RAD12REGISTRY}/app-${{ github.event.repository.name }}:${{ github.event.inputs.build_tag }}
         env: 
           DOCKER_HOST: tcp://localhost:2375
       - name: Push image to registry
