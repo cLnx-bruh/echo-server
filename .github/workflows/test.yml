@@ -12,7 +12,7 @@ jobs:
       docker:
         image: docker:dind
         ports:
-          - 2375:2375
+          - 2376:2376
         options: --privileged=true --name=docker-dind
 
     steps:
@@ -21,7 +21,7 @@ jobs:
     - name: test docker
       run: docker run curlimages/curl
       env:
-        DOCKER_HOST: tcp://localhost:2375
+        DOCKER_HOST: tcp://localhost:2376
     - name: Setup tmate session
       if: always()
       uses: mxschmitt/action-tmate@v3
