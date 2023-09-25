@@ -17,11 +17,11 @@ jobs:
 
     steps:
     - name: sleep
-      run: sleep 10
+      run: sleep 60
     - name: test docker
       run: docker ps
       env:
-        DOCKER_HOST: tcp://127.0.0.1:2375
+        DOCKER_HOST: tcp://0.0.0.0:2375
     
     - name: dockerhost
       run: echo $
