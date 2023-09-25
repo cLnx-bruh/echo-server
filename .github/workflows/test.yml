@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: sleep
-      run: sleep 15
+      run: sleep 20
     - name: test docker
       run: docker run curlimages/curl
       env:
