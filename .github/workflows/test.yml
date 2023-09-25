@@ -16,9 +16,13 @@ jobs:
         options: --privileged=true --name=docker-dind
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-
+    - name: sleep
+      run: sleep 60
+    - name: curl
+      run: |
+        curl http://localhost:2375
+        curl http://127.0.0.1:2375
+        curl http://0.0.0.0:2375
     - name: test docker
       run: docker ps
       env:
