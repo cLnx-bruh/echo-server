@@ -36,7 +36,10 @@ jobs:
         run: echo "${RAD12_DOCKERCONFIG}" > ~/.docker/config.json
         env:
           RAD12_DOCKERCONFIG: "${{ secrets.RAD12_DOCKERCONFIG }}"
-
+      - name: test docker
+        run: docker ps
+        env: 
+          DOCKER_HOST: tcp://localhost:2375
       - name: Build image
         run: |
           echo $DOCKER_HOST
