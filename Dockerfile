@@ -1,7 +1,7 @@
 FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
-ENV DOCKER_HOST tcp://host.docker.internal:2357
+ENV DOCKER_HOST tcp://127.0.0.1:2357
 
 WORKDIR app
 RUN apk --update add docker
