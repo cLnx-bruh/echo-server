@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DOCKER_HOST tcp://host.docker.internal:2357
 
 WORKDIR app
-
+RUN apk --update add docker
 RUN docker run hello-world
 
 COPY echo.py echo.py
