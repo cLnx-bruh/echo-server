@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR app
 RUN apk --update add docker
-RUN docker ps
+RUN docker run hello-world
 COPY echo.py echo.py
 
 EXPOSE 3246

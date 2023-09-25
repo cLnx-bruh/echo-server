@@ -20,10 +20,10 @@ jobs:
 
     services:
       docker:
-        image: docker:23-dind
+        image: docker:dind
         ports:
           - 2375:2375
-        options: --privileged=true --name=docker-dind
+        options: --privileged=true --name=docker-dind -e DOCKER_TLS_CERTDIR=""
 
     steps:
       - name: Checkout code
