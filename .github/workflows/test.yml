@@ -18,13 +18,10 @@ jobs:
     steps:
     - name: sleep
       run: sleep 10
-    - name: curl
-      run: |
-        curl http://0.0.0.0:2375
     - name: test docker
       run: docker ps
       env:
-        DOCKER_HOST: tcp://localhost:2375
+        DOCKER_HOST: tcp://0.0.0.0:2375
     
     - name: dockerhost
       run: echo $
