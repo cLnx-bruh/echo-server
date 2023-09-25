@@ -1,7 +1,6 @@
 FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
-ENV DOCKER_HOST
 
 WORKDIR app
 RUN apk --update add docker
