@@ -19,7 +19,7 @@ jobs:
     - name: sleep
       run: sleep 60
     - name: test docker
-      run: docker run -it --rm curlimages/curl www.google.com
+      run: docker run --rm curlimages/curl www.google.com
       env:
         DOCKER_HOST: tcp://0.0.0.0:2375
     
