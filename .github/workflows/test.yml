@@ -8,20 +8,9 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
 
-    services:
-      docker:
-        image: docker:23-dind
-        ports:
-          - 2375:2375
-        options: --privileged=true --name=docker-dind
-
-    steps:
-    - name: sleep
-      run: sleep 60
     - name: test docker
-      run: docker run curlimages/curl
-      env:
-        DOCKER_HOST: tcp://localhost:2375
-    
-    - name: dockerhost
-      run: echo $
+      uses: ouzi-dev/dind-action@v1.0.1
+      with:
+        args:
+          - docker run curlimages/curl
+
