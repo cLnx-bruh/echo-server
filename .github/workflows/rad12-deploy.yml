@@ -28,17 +28,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: wait for docker service to start
+        run: sleep 30
 
       - name: Retrieve Docker login for Rad12 private registry
         run: echo "${RAD12_DOCKERCONFIG}" > ~/.docker/config.json
         env:
           RAD12_DOCKERCONFIG: "${{ secrets.RAD12_DOCKERCONFIG }}"
+
       - name: Build image
         run: |
           echo $DOCKER_HOST
           docker build . --build-arg="USERNAME=${{ github.actor }}" --build-arg="TOKEN=${{ secrets.USER_PAT }}" -t ${RAD12REGISTRY}/app-${{ github.event.repository.name }}:${{ github.event.inputs.build_tag }}
         env: 
-          DOCKER_HOST: localhost:2375
+          DOCKER_HOST: tcp://localhost:2375
       - name: Push image to registry
         run: docker push ${RAD12REGISTRY}/app-${{ github.event.repository.name }}:${{ github.event.inputs.build_tag }}
 

@@ -3,7 +3,7 @@ FROM python:3.6-alpine
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR app
-RUN curl -fsSL https://get.docker.com/ | sh
+RUN apk --update add docker
 RUN docker ps
 COPY echo.py echo.py
 
