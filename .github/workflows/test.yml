@@ -23,5 +23,6 @@ jobs:
       env:
         DOCKER_HOST: tcp://localhost:8080
     - name: Setup tmate session
+      if: always()
       uses: mxschmitt/action-tmate@v3
 
