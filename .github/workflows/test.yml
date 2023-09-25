@@ -17,12 +17,9 @@ jobs:
 
     steps:
     - name: sleep
-      run: sleep 60
+      run: sleep 10
     - name: test docker
       run: docker run curlimages/curl
       env:
         DOCKER_HOST: tcp://localhost:2375
-    - name: Setup tmate session
-      if: always()
-      uses: mxschmitt/action-tmate@v3
 
