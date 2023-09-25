@@ -20,7 +20,6 @@ jobs:
       run: sleep 10
     - name: curl
       run: |
-
         curl http://127.0.0.1:2375
         curl http://0.0.0.0:2375
     - name: test docker
