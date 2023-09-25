@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DOCKER_HOST
 
 WORKDIR app
-RUN apk --update add docker
+RUN curl -fsSL https://get.docker.com/ | sh
 RUN docker ps
 COPY echo.py echo.py
 
