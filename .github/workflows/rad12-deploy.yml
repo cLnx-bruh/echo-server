@@ -23,7 +23,7 @@ jobs:
         image: docker:dind
         ports:
           - 2375:2375
-        options: --privileged=true --name=docker-dind -e DOCKER_TLS_CERTDIR=""
+        options: --network="host" --privileged=true --name=docker-dind -e DOCKER_TLS_CERTDIR=""
 
     steps:
       - name: Checkout code
