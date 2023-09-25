@@ -1,4 +1,4 @@
-name: test-deploy
+name: test
 
 on:
   workflow_dispatch:
@@ -8,12 +8,21 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
 
+    services:
+      docker:
+        image: docker:23-dind
+        ports:
+          - 2375:2375
+        options: --privileged=true --name=docker-dind
+
     steps:
     - name: Check out code
       uses: actions/checkout@v3
 
     - name: test docker
-      run: docker info
+      run: docker ps
+      env:
+        DOCKER_HOST: tcp://localhost:2375
     
     - name: dockerhost
       run: echo $
